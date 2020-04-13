@@ -42,16 +42,15 @@ class NoteListActivity extends AppCompatActivity {
             @Override
             public
             void onClick ( View view ) {
-                Snackbar.make ( view, "Replace with your own action", Snackbar.LENGTH_LONG )
-                        .setAction ( "Action", null ).show ();
-            }
+               startActivity ( new Intent ( NoteListActivity.this,NoteActivity.class ) );
+                   }
         } );
         initialiseDisplayContents();
     }
 
     private
     void initialiseDisplayContents () {
-        ListView listnotes = findViewById ( R.id.list_notes );
+       final  ListView listnotes = findViewById ( R.id.list_notes );
         List<NoteInfo> notes = DataManager.getInstance ().getNotes ();
         ArrayAdapter<NoteInfo> adapterNotes = new ArrayAdapter<> ( this,android.R.layout.simple_list_item_1,notes);
         listNotes.setAdapter ( adapterNotes );
@@ -60,6 +59,8 @@ class NoteListActivity extends AppCompatActivity {
             public
             void onItemClick ( AdapterView<?> adapterView, View view, int position, long l ) {
                 Intent intent = new Intent( NoteListActivity.this, NoteActivity.class);
+//                NoteInfo note = (NoteInfo) listnotes.getItemAtPosition ( position );
+                intent.putExtra (NoteActivity.NOTE_POSITON,position);
                 startActivity(intent);
             }
         } );
