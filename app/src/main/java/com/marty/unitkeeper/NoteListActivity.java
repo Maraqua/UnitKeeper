@@ -27,6 +27,7 @@ class NoteListActivity extends AppCompatActivity {
     ListView listNotes;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    private ArrayAdapter<NoteInfo> mAdapterNotes;
 
     @Override
     protected
@@ -48,12 +49,19 @@ class NoteListActivity extends AppCompatActivity {
         initialiseDisplayContents();
     }
 
+    @Override
+    protected
+    void onResume () {
+        super.onResume ();
+        mAdapterNotes.notifyDataSetChanged ();
+    }
+
     private
     void initialiseDisplayContents () {
        final  ListView listnotes = findViewById ( R.id.list_notes );
         List<NoteInfo> notes = DataManager.getInstance ().getNotes ();
-        ArrayAdapter<NoteInfo> adapterNotes = new ArrayAdapter<> ( this,android.R.layout.simple_list_item_1,notes);
-        listNotes.setAdapter ( adapterNotes );
+        mAdapterNotes = new ArrayAdapter<> ( this, android.R.layout.simple_list_item_1, notes);
+        listNotes.setAdapter ( mAdapterNotes );
         listNotes.setOnItemClickListener ( new AdapterView.OnItemClickListener () {
             @Override
             public
